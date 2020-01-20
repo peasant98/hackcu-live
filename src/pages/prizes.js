@@ -1,13 +1,13 @@
-import React from "react"
-import Layout from "../components/layout"
+import React from 'react';
+import Layout from '../components/layout';
 // import prizes from "../../content/data/prizes.yaml"
-import { Collection, CollectionItem } from "react-materialize"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
-import { useStaticQuery, graphql } from "gatsby"
-import { css } from "@emotion/core"
-import SEO from "../components/seo"
-import OutsideLink from "../components/outside-link"
+import { Collection, CollectionItem } from 'react-materialize';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useStaticQuery, graphql } from 'gatsby';
+import { css } from '@emotion/core';
+import SEO from '../components/seo';
+import OutsideLink from '../components/outside-link';
 
 // - title: "Coolest Hack with Twilio"
 //   type: sponsor
@@ -50,7 +50,7 @@ const Prize = ({ title, description, award, url }) => (
       </OutsideLink>
     )}
   </CollectionItem>
-)
+);
 
 export default () => {
   const data = useStaticQuery(graphql`
@@ -68,14 +68,14 @@ export default () => {
         }
       }
     }
-  `)
-  const prizes = data.allPrizesYaml.edges.map(val => val.node)
+  `);
+  const prizes = data.allPrizesYaml.edges.map(val => val.node);
   return (
     <Layout title="Prizes">
       <SEO title="Prizes" />
       <Collection>
         {prizes
-          .filter(prize => prize.type === "hackathon")
+          .filter(prize => prize.type === 'hackathon')
           .map(prize => (
             <Prize key={prize.id} {...prize} />
           ))}
@@ -84,11 +84,11 @@ export default () => {
       <h1>Sponsored Prizes</h1>
       <Collection>
         {prizes
-          .filter(prize => prize.type === "sponsor")
+          .filter(prize => prize.type === 'sponsor')
           .map(prize => (
             <Prize key={prize.id} {...prize} />
           ))}
       </Collection>
     </Layout>
-  )
-}
+  );
+};

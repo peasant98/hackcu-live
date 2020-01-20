@@ -1,8 +1,8 @@
-import React from "react"
-import Layout from "../components/layout"
-import { css } from "@emotion/core"
-import { useStaticQuery, graphql } from "gatsby"
-import SEO from "../components/seo"
+import React from 'react';
+import Layout from '../components/layout';
+import { css } from '@emotion/core';
+import { useStaticQuery, graphql } from 'gatsby';
+import SEO from '../components/seo';
 
 export default () => {
   // get the rule.md from data based on the frontmatter property `path: "rules"`
@@ -12,7 +12,7 @@ export default () => {
         html
       }
     }
-  `)
+  `);
   return (
     <Layout title="Rules">
       <SEO title="Rules" />
@@ -28,5 +28,5 @@ export default () => {
         dangerouslySetInnerHTML={{ __html: data.markdownRemark.html }}
       />
     </Layout>
-  )
-}
+  );
+};

@@ -1,28 +1,28 @@
-import React from "react"
-import { css } from "@emotion/core"
-import styled from "@emotion/styled"
-import { graphql, useStaticQuery } from "gatsby"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import React from 'react';
+import { css } from '@emotion/core';
+import styled from '@emotion/styled';
+import { graphql, useStaticQuery } from 'gatsby';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTwitter,
   faInstagram,
-  faFacebook,
-} from "@fortawesome/free-brands-svg-icons"
+  faFacebook
+} from '@fortawesome/free-brands-svg-icons';
 import {
   faChevronRight,
   faUpload,
   faQuestion,
   faInfo,
-  faWifi,
-} from "@fortawesome/free-solid-svg-icons"
-import { Row, Col, Card } from "react-materialize"
+  faWifi
+} from '@fortawesome/free-solid-svg-icons';
+import { Row, Col, Card } from 'react-materialize';
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
-import OutsideLink from "../components/outside-link"
+import Layout from '../components/layout';
+import SEO from '../components/seo';
+import OutsideLink from '../components/outside-link';
 
 function removeHttps(string) {
-  return string.replace("https://", "")
+  return string.replace('https://', '');
 }
 
 const InfoItem = ({ children }) => (
@@ -30,13 +30,13 @@ const InfoItem = ({ children }) => (
     <p>{children}</p>
     <br />
   </>
-)
+);
 
 const SocialItem = styled.h4`
   font-size: 1.5rem;
   font-weight: 700;
   margin: 1.14rem 0 0.912rem 0;
-`
+`;
 
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
@@ -56,8 +56,8 @@ const IndexPage = () => {
         }
       }
     }
-  `)
-  const { title, social } = data.site.siteMetadata
+  `);
+  const { title, social } = data.site.siteMetadata;
   return (
     <Layout title={`Welcome to ${title}!`}>
       <SEO title="Home" />
@@ -72,7 +72,7 @@ const IndexPage = () => {
           >
             <InfoItem>
               <b>
-                <FontAwesomeIcon icon={faChevronRight} /> Slack:{" "}
+                <FontAwesomeIcon icon={faChevronRight} /> Slack:{' '}
                 <OutsideLink href={social.slack}>
                   {removeHttps(social.slack)}
                 </OutsideLink>
@@ -83,7 +83,7 @@ const IndexPage = () => {
             </InfoItem>
             <InfoItem>
               <b>
-                <FontAwesomeIcon icon={faUpload} /> Devpost:{" "}
+                <FontAwesomeIcon icon={faUpload} /> Devpost:{' '}
                 <OutsideLink href={social.devpost}>
                   {removeHttps(social.devpost)}
                 </OutsideLink>
@@ -94,7 +94,7 @@ const IndexPage = () => {
             </InfoItem>
             <InfoItem>
               <b>
-                <FontAwesomeIcon icon={faQuestion} /> Mentor queue:{" "}
+                <FontAwesomeIcon icon={faQuestion} /> Mentor queue:{' '}
                 <OutsideLink href={social.mentor}>
                   {removeHttps(social.mentor)}
                 </OutsideLink>
@@ -104,7 +104,7 @@ const IndexPage = () => {
             </InfoItem>
             <InfoItem>
               <b>
-                <FontAwesomeIcon icon={faInfo} /> Hacker guide:{" "}
+                <FontAwesomeIcon icon={faInfo} /> Hacker guide:{' '}
                 <OutsideLink href={social.hackerGuide}>
                   {removeHttps(social.hackerGuide)}
                 </OutsideLink>
@@ -124,22 +124,22 @@ const IndexPage = () => {
             `}
           >
             <p>
-              Get{" "}
+              Get{' '}
               <OutsideLink href="https://twitter.com/search?src=typd&q=%23lhd">
                 #HackCU
-              </OutsideLink>{" "}
+              </OutsideLink>{' '}
               trending!
             </p>
             <SocialItem>
-              <FontAwesomeIcon icon={faTwitter} />{" "}
+              <FontAwesomeIcon icon={faTwitter} />{' '}
               <OutsideLink href={social.twitter}>@HackCU</OutsideLink>
             </SocialItem>
             <SocialItem>
-              <FontAwesomeIcon icon={faInstagram} />{" "}
+              <FontAwesomeIcon icon={faInstagram} />{' '}
               <OutsideLink href={social.instagram}>@HackCU</OutsideLink>
             </SocialItem>
             <SocialItem>
-              <FontAwesomeIcon icon={faFacebook} />{" "}
+              <FontAwesomeIcon icon={faFacebook} />{' '}
               <OutsideLink href={social.facebook}>/HackCU</OutsideLink>
             </SocialItem>
           </Card>
@@ -157,17 +157,17 @@ const IndexPage = () => {
             `}
           >
             <p>
-              Open your browser and go to{" "}
+              Open your browser and go to{' '}
               <OutsideLink href="https://cuwireless.int/colorado.edu">
                 cuwireless.int.colorado.edu
-              </OutsideLink>{" "}
+              </OutsideLink>{' '}
               to accept the usage agreement.
             </p>
           </Card>
         </Col>
       </Row>
     </Layout>
-  )
-}
+  );
+};
 
-export default IndexPage
+export default IndexPage;

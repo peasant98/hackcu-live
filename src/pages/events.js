@@ -1,11 +1,11 @@
-import React from "react"
-import Layout from "../components/layout"
-import { Link, useStaticQuery, graphql } from "gatsby"
-import { CollectionItem, Collection } from "react-materialize"
-import { css } from "@emotion/core"
-import OutsideLink from "../components/outside-link"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
+import React from 'react';
+import Layout from '../components/layout';
+import { Link, useStaticQuery, graphql } from 'gatsby';
+import { CollectionItem, Collection } from 'react-materialize';
+import { css } from '@emotion/core';
+import OutsideLink from '../components/outside-link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default () => {
   const data = useStaticQuery(graphql`
@@ -31,9 +31,9 @@ export default () => {
         }
       }
     }
-  `)
-  const workshops = data.allWorkshopsYaml.edges.map(val => val.node)
-  const sideEvents = data.allSideEventsYaml.edges.map(val => val.node)
+  `);
+  const workshops = data.allWorkshopsYaml.edges.map(val => val.node);
+  const sideEvents = data.allSideEventsYaml.edges.map(val => val.node);
   return (
     <Layout title="Events">
       <p>
@@ -78,5 +78,5 @@ export default () => {
         ))}
       </Collection>
     </Layout>
-  )
-}
+  );
+};

@@ -1,10 +1,10 @@
-import React from "react"
-import { css } from "@emotion/core"
+import React from 'react';
+import { css } from '@emotion/core';
 import {
   Card as MaterialCard,
   CardContent,
-  Typography,
-} from "@material-ui/core"
+  Typography
+} from '@material-ui/core';
 
 export const CardTitle = ({ css: customCss, children }) => (
   <Typography
@@ -16,7 +16,7 @@ export const CardTitle = ({ css: customCss, children }) => (
   >
     {children}
   </Typography>
-)
+);
 
 export const Card = ({ css: customCss, children }) => (
   <MaterialCard
@@ -28,4 +28,4 @@ export const Card = ({ css: customCss, children }) => (
   >
     <CardContent>{children}</CardContent>
   </MaterialCard>
-)
+);

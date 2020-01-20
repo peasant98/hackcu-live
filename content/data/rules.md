@@ -1,5 +1,5 @@
 ---
-path: "rules"
+path: 'rules'
 ---
 
 These rules are based on the standard competition rules used at MLH Member Hackathons.
