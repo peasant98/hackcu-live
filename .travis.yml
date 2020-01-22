@@ -13,4 +13,5 @@ jobs:
         provider: surge
         project: ./public/
         domain: hackculive.surge.sh
+        skip_cleanup: true
       on: master
