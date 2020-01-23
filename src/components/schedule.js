@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
-import { breakpoints } from '../util/breakpoints';
+import { breakpoints, breakpointsConfig } from '../util/breakpoints';
+import useMediaQuery from 'react-use-media-query-hook';
 
 const ScheduleContainer = styled.div`
   position: relative;
@@ -194,6 +195,7 @@ const Event = ({ startPos, height, item, onClick }) => (
       margin-right: 20px;
       transition: opacity 0.2s, background 0.2s;
       background-color: ${theme.colors.secondary};
+      color: ${theme.colors.text};
 
       &:last-of-type {
         margin-right: 5%;
@@ -231,19 +233,33 @@ const Event = ({ startPos, height, item, onClick }) => (
     onClick={onClick}
   >
     <VerticalAlign>
-      <span>
-        {item.start} - {item.end}
-      </span>
-      <br />
-      <em
+      <div
         css={css`
-          ${breakpoints.small} {
-            font-size: 1.3rem;
-          }
+          display: flex;
+          flex-direction: column;
+          text-align: center;
         `}
       >
-        {item.title}
-      </em>
+        <span
+          css={css`
+            font-size: 0.85rem;
+            margin: 0 auto;
+          `}
+        >
+          {item.start} - {item.end}
+        </span>
+        <div
+          css={css`
+            ${breakpoints.small} {
+              font-size: 1.3rem;
+              font-weight: 500;
+              margin: 0 auto;
+            }
+          `}
+        >
+          {item.title}
+        </div>
+      </div>
     </VerticalAlign>
   </li>
 );
@@ -256,7 +272,21 @@ export default ({
   groups,
   openEvent
 }) => {
+  // TODO: remove events that have already pasted in time?
+
+  const isMobile = useMediaQuery(`(max-width: ${breakpointsConfig.small}px)`);
+
   const allEvents = groups.flatMap(group => group.events);
+  const eventsInOrder = allEvents.sort((a, b) => {
+    if (!!a.startTime && !!b.startTime) {
+      const startDiff = a.startTime.diff(b.startTime);
+      if (startDiff === 0 && !!a.endTime && !!b.endTime) {
+        return a.endTime.diff(b.endTime);
+      }
+      return startDiff;
+    }
+    return 0;
+  });
   const minTime = Math.ceil(
     allEvents.reduce((min, event) => {
       if (
@@ -322,10 +352,10 @@ export default ({
               event.startTime.hours() +
               (event.endTime.minutes() - event.startTime.minutes()) / 60) *
             hourHeight
-          : hourHeight;
+          : hourHeight / 2;
       return (
         <Event
-          key={event.name}
+          key={event.title}
           startPos={startPos}
           height={height}
           onClick={openEvent(event)}
@@ -334,7 +364,36 @@ export default ({
       );
     });
 
-  return (
+  return isMobile ? (
+    <>
+      {eventsInOrder.map(event => (
+        <div
+          css={theme => css`
+            color: ${theme.colors.text};
+            background-color: ${theme.colors.secondary};
+            margin-top: 10px;
+            border-radius: 5px;
+            padding: 5px;
+          `}
+          onClick={openEvent(event)}
+        >
+          <span>
+            {event.start} - {event.end}
+          </span>
+          <br />
+          <em
+            css={css`
+              ${breakpoints.small} {
+                font-size: 1.3rem;
+              }
+            `}
+          >
+            {event.title}
+          </em>
+        </div>
+      ))}
+    </>
+  ) : (
     <ScheduleContainer
       css={css`
         ${breakpoints.small} {
@@ -357,7 +416,7 @@ export default ({
             {groups.map(group => (
               <EventGroup>
                 <EventInfo>
-                  <span>{group.title}</span>
+                  <span>{!!group.title ? group.title : 'Misc.'}</span>
                 </EventInfo>
                 <ul>{createEvents(group.events)}</ul>
               </EventGroup>

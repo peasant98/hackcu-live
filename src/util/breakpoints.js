@@ -1,4 +1,4 @@
-const breakpointsConfig = {
+export const breakpointsConfig = {
   small: 800,
   regular: 1000
 };
