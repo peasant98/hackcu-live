@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
-import { breakpoints, breakpointsConfig } from '../util/breakpoints';
-import useMediaQuery from 'react-use-media-query-hook';
+import { breakpoints } from '../util/breakpoints';
 
 const ScheduleContainer = styled.div`
   position: relative;
@@ -98,23 +97,12 @@ const UlEvents = styled.ul`
 const EventGroup = styled.li`
   margin-bottom: 0px;
 
-  // TODO: extract ul to styled component
   & > ul {
     position: relative;
     padding: 0 5%;
     /* force its children to stay on one line */
     display: flex;
-    overflow-x: scroll;
-  }
-
-  & > ul:after {
-    /* never visible - used to add a right padding to .events-group > ul */
-    display: inline-block;
-    content: '-';
-    width: 1px;
-    height: 100%;
-    opacity: 0;
-    color: transparent;
+    flex-direction: column;
   }
 
   ${breakpoints.small} {
@@ -126,19 +114,11 @@ const EventGroup = styled.li`
     margin: auto;
 
     & > ul {
-      // TODO:?
       height: 900px;
       /* reset style */
       display: block;
       overflow: visible;
       padding: 0;
-
-      &:after {
-        clear: both;
-        content: '';
-        display: block;
-        display: none;
-      }
     }
   }
 `;
@@ -156,7 +136,6 @@ const EventInfo = styled.div`
     & > span {
       margin: 0 auto;
       display: table;
-      // TODO:?
       height: 50px;
       border-bottom: 1px solid #eaeaea;
       /* reset style */
@@ -187,7 +166,6 @@ const Event = ({ startPos, height, item, onClick }) => (
   <li
     css={theme => css`
       flex-shrink: 0;
-      float: left;
       height: 150px;
       width: 100%;
       max-width: 300px;
@@ -196,16 +174,13 @@ const Event = ({ startPos, height, item, onClick }) => (
       transition: opacity 0.2s, background 0.2s;
       background-color: ${theme.colors.secondary};
       color: ${theme.colors.text};
-
-      &:last-of-type {
-        margin-right: 5%;
-      }
+      margin: 5px auto;
+      cursor: pointer;
+      border-radius: 5px;
 
       ${breakpoints.small} {
         position: absolute;
         z-index: 3;
-        /*  height: 100px !important; */
-        /* top position and height will be set using js */
         width: calc(100% + 20px);
         left: -1px;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1),
@@ -213,21 +188,9 @@ const Event = ({ startPos, height, item, onClick }) => (
         /* reset style */
         flex-shrink: 1;
         max-width: none;
-        margin-right: 0;
+        margin: 0;
         top: ${startPos}px;
         height: ${height}px;
-        // TODO:
-        // .cd-schedule .events .single-event a {
-        //   padding-top: 10px;
-        // }
-        // .cd-schedule .events .single-event:last-of-type {
-        //   /* reset style */
-        //   margin-right: 0;
-        // }
-        // .cd-schedule .events .single-event.selected-event {
-        //   /* the .selected-event class is added when an user select the event */
-        //   visibility: hidden;
-        // }
       }
     `}
     onClick={onClick}
@@ -273,9 +236,6 @@ export default ({
   openEvent
 }) => {
   // TODO: remove events that have already pasted in time?
-
-  const isMobile = useMediaQuery(`(max-width: ${breakpointsConfig.small}px)`);
-
   const allEvents = groups.flatMap(group => group.events);
   const eventsInOrder = allEvents.sort((a, b) => {
     if (!!a.startTime && !!b.startTime) {
@@ -364,36 +324,7 @@ export default ({
       );
     });
 
-  return isMobile ? (
-    <>
-      {eventsInOrder.map(event => (
-        <div
-          css={theme => css`
-            color: ${theme.colors.text};
-            background-color: ${theme.colors.secondary};
-            margin-top: 10px;
-            border-radius: 5px;
-            padding: 5px;
-          `}
-          onClick={openEvent(event)}
-        >
-          <span>
-            {event.start} - {event.end}
-          </span>
-          <br />
-          <em
-            css={css`
-              ${breakpoints.small} {
-                font-size: 1.3rem;
-              }
-            `}
-          >
-            {event.title}
-          </em>
-        </div>
-      ))}
-    </>
-  ) : (
+  return (
     <ScheduleContainer
       css={css`
         ${breakpoints.small} {

@@ -39,7 +39,6 @@
     "react-helmet": "^5.2.1",
     "react-materialize": "^3.5.7",
     "react-typography": "^0.16.19",
-    "react-use-media-query-hook": "0.0.1",
     "remark-html": "^10.0.0",
     "theme-ui": "^0.2.49",
     "typography": "^0.16.19",
