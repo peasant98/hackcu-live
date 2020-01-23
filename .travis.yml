@@ -6,12 +6,9 @@ jobs:
   include:
     - stage: Build Gatsby Website
       script: npm run build
-    - stage: Deploy to surge
-      if: branch IN (master) AND NOT type IN (pull_request) # this is that travis dosnt create a "deploy" job in an commit other than in "master"
-      script: echo "Deploying to surge ..."
       deploy:
-        provider: surge
-        project: ./public/
-        domain: hackculive.surge.sh
+        provider: script
+        script: npm run deploy
         skip_cleanup: true
-      on: master
+        on:
+          branch: master
