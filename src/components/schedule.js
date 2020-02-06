@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
-import { breakpoints } from '../util/breakpoints';
+import { breakpoints, breakpointsConfig } from '../util/breakpoints';
+import Media from 'react-media';
 
 const ScheduleContainer = styled.div`
   position: relative;
@@ -168,7 +169,7 @@ const Event = ({ startPos, height, item, onClick }) => (
       flex-shrink: 0;
       height: 150px;
       width: 100%;
-      max-width: 300px;
+      // max-width: 300px;
       box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.2);
       margin-right: 20px;
       transition: opacity 0.2s, background 0.2s;
@@ -325,36 +326,49 @@ export default ({
     });
 
   return (
-    <ScheduleContainer
-      css={css`
-        ${breakpoints.small} {
-          height: ${(calEnd - calStart) * 2 * (hourHeight / 2) +
-            hourHeight / 4}px;
-        }
-      `}
+    <Media
+      queries={{
+        desktop: `(min-width: ${breakpointsConfig.small}px)`
+      }}
     >
-      <Timeline>
-        <ul>{timeline}</ul>
-      </Timeline>
-      <Events>
-        <div
-          css={css`
-            display: relative;
-            height: 100%;
-          `}
-        >
-          <UlEvents>
-            {groups.map(group => (
-              <EventGroup>
-                <EventInfo>
-                  <span>{!!group.title ? group.title : 'Misc.'}</span>
-                </EventInfo>
-                <ul>{createEvents(group.events)}</ul>
-              </EventGroup>
-            ))}
-          </UlEvents>
-        </div>
-      </Events>
-    </ScheduleContainer>
+      {matches => (
+        <>
+          {!matches.desktop && <ul>{createEvents(eventsInOrder)}</ul>}
+          {matches.desktop && (
+            <ScheduleContainer
+              css={css`
+                ${breakpoints.small} {
+                  height: ${(calEnd - calStart) * 2 * (hourHeight / 2) +
+                    hourHeight / 4}px;
+                }
+              `}
+            >
+              <Timeline>
+                <ul>{timeline}</ul>
+              </Timeline>
+              <Events>
+                <div
+                  css={css`
+                    display: relative;
+                    height: 100%;
+                  `}
+                >
+                  <UlEvents>
+                    {groups.map(group => (
+                      <EventGroup>
+                        <EventInfo>
+                          <span>{!!group.title ? group.title : 'Misc.'}</span>
+                        </EventInfo>
+                        <ul>{createEvents(group.events)}</ul>
+                      </EventGroup>
+                    ))}
+                  </UlEvents>
+                </div>
+              </Events>
+            </ScheduleContainer>
+          )}
+        </>
+      )}
+    </Media>
   );
 };
